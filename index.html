@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sass.js/0.11.1/sass.min.js"></script>
+    <style>
+      .specified-scope {
+        width: 300px;
+      }
+      .specified-scope li {
+        padding: 0 20px;
+        height: 40px;
+        line-height: 40px;
+        color: #fff;
+      }
+      .specified-scope li:nth-child(odd) {
+        background-color: pink;
+      }
+      .specified-scope li:nth-child(even) {
+        background-color: rgb(219, 84, 106);
+      }
+      /* 从第六个开始都是灰色 ,如果n是负数那么就是从开开始的前6个都是灰色*/
+      .specified-scope li:nth-child(-n + 6) {
+        background-color: rgb(185, 169, 172);
+      }
+
+      /* ----------------竖向排版----------------- */
+      .vertical-text {
+        /* 竖向排版 */
+        writing-mode: vertical-rl;
+      }
+
+      /* 对齐俩端文本 */
+      .justify-text li {
+        padding: 0 20px;
+        width: 100px;
+        height: 40px;
+        background-color: #ddd;
+        line-height: 40px;
+        text-align-last: justify;
+        color: #fff;
+      }
+      .justify-text li {
+        margin-top: 20px;
+      }
+      /* --------------object-fit规定图像尺寸------------ */
+      .image-size {
+        display: flex;
+        justify-content: space-between;
+        width: 800px;
+        height: 400px;
+      }
+      .image-size li img {
+        width: 160px;
+        height: 100%;
+      }
+      .image-size .cover {
+        object-fit: cover;
+      }
+      .image-size .fill {
+        object-fit: fill;
+      }
+      .image-size .contain {
+        object-fit: contain;
+      }
+      .image-size .scale-down {
+        object-fit: scale-down;
+      }
+      /* --------------使用text-overflow控制文本溢出------------------- */
+      .ellipsis-text {
+        line-height: 30px;
+        font-size: 16px;
+        margin-top: 20px;
+        width: 300px;
+      }
+      .sl-ellipsis{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      /* 超出三行在第三行省略 ，可以控制在第几行省略*/
+      .ml-ellipsis{
+        display: -webkit-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+      }
+      .mls-ellipsis{
+        overflow: hidden;
+        position: relative;
+        max-height: 90px;
+      }
+      .mls-ellipsis::after{
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        padding-left: 40px;
+        background: linear-gradient(to right,transparent,#fff 50%);
+        content: "----";
+      }
+      /* ------------使用transform翻转内容---------- */
+      .flip-content{
+        height: 300px;
+        width: 500px;
+      }
+      .flip-content li{
+        position: relative;
+        width: 121px;
+        height: 51px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 30px;
+        color: #b88181;
+      }
+      .flip-content li::before,li::after{
+        position: absolute;
+        background-color: #66f;
+        content: "";
+      }
+      .flip-content .x-axis{
+        /* 反转 */
+        transform: scale(1,-1);
+      }
+      .flip-content .x-axis::after{
+        left: 0;
+        top: 25px;
+        width: 100%;
+        height: 2px;
+      }
+      .flip-content .y-axis{
+        /* 反转 */
+        transform: scale(-1,1);
+      }
+      .flip-content .y-axis::after{
+        left: 0;
+        top: 25px;
+        width: 100%;
+        height: 2px;
+      }
+
+      /* --------------使用letter-spacing设置文本间距----------- */
+      .reverse-text{
+        font-size: 20px;
+        letter-spacing: 40px;
+      }
+      /* --------------原生表单校验（只改变边框颜色的那种）------------------- */
+      label{
+        display: block;
+        padding-bottom: 5px;
+        font-weight: bold;
+      }
+      input,textarea{
+        display: block;
+        padding: 0 20px;
+        border: 1px solid #ccc;
+        width:300px;
+        height: 40px;
+        outline: none;
+        caret-color: red;
+        transition: all 300ms;
+      }
+      input:focus:valid, textarea:focus:valid{
+        border-color: rgb(36, 228, 116);
+      }
+      input:focus:invalid, textarea:focus:invalid{
+        border-color: rgb(233, 78, 17);
+      }
+      /* --------------------美化单选按钮表单------------------------ */
+      .beauty-selection{
+        width: 600px;
+        display: flex;
+        
+      }
+      .beauty-selection li{
+        display: flex;
+        align-items: center;
+      }
+      .beauty-selection li input{
+        width: 20px;
+        height: 20px;
+        background-color: #f89;
+      }
+      .beauty-selection li label{
+        width: 20px;
+        height: 20px;
+        border: 1px solid #f89;
+        background-clip: content-box;
+        cursor: pointer;
+        transform: all 300ms;
+        border-radius: 100%;
+        margin-right: 5px;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <div class="bruce">
+      <ul class="specified-scope">
+        <li>10001</li>
+        <li>10002</li>
+        <li>10003</li>
+        <li>10004</li>
+        <li>10005</li>
+        <li>10006</li>
+        <li>10007</li>
+        <li>10008</li>
+        <li>10009</li>
+        <li>10010</li>
+      </ul>
+    </div>
+    <hr />
+    <h3>竖向排版</h3>
+    <div class="flex-vertical" data-title="使用writing-mode排版竖向文本">
+      <div class="vertical-text">
+        <h3>月光</h3>
+        <p>
+          窗前明月光，<br />疑是地上霜，<br />举头望明月，<br />低头思故乡。
+        </p>
+      </div>
+    </div>
+    <hr />
+    <div>
+      <ul class="justify-text">
+        <li>账户</li>
+        <li>密码</li>
+        <li>电子邮件</li>
+        <li>通讯地址</li>
+      </ul>
+    </div>
+    <hr />
+    <div>
+      <h2>object-fit规定图像尺寸</h2>
+      <ul class="image-size">
+        <li><img class="cover" src="../components/01.jpg" /></li>
+        <li><img class="fill" src="../components/01.jpg" /></li>
+        <li><img class="contain" src="../components/01.jpg" /></li>
+        <li><img class="scale-down" src="../components/01.jpg" /></li>
+      </ul>
+    </div>
+    <hr />
+    <div data-title="使用text-overflow控制溢出文本">
+      <p class="ellipsis-text s-line sl-ellipsis">
+        CSS非常有趣和搞怪，可以做一些JS也能做的事情
+      </p>
+      <p class="ellipsis-text m-line ml-ellipsis">
+        层叠样式表(CSS)是一种用来表现HTML(标准通用标记语言的一个应用)或XML(标准通用标记语言的一个子集)等文件样式的计算机语言。CSS不仅可以静态地修饰网页，还可以配合各种脚本语言动态地对网页各元素进行格式化。
+      </p>
+      <p class="ellipsis-text m-line mls-ellipsis">
+        层叠样式表(CSS)是一种用来表现HTML(标准通用标记语言的一个应用)或XML(标准通用标记语言的一个子集)等文件样式的计算机语言。CSS不仅可以静态地修饰网页，还可以配合各种脚本语言动态地对网页各元素进行格式化。
+      </p>
+    </div>
+    <hr>
+    <div class="bruce flex-ct-x" data-title="使用transform翻转内容">
+      <ul class="flip-content">
+        <li>正常文本</li>
+        <li class="x-axis">水平翻转</li>
+        <li class="y-axis">垂直翻转</li>
+        <li class="reverse">倒序翻转</li>
+      </ul>
+    </div>
+    <hr>
+    <div class="bruce flex-ct-x" data-title="使用letter-spacing排版倒序文本">
+      <div class="reverse-text">恭喜发财</div>
+    </div>
+    <hr>
+    <div data-title="使用:valid和:invalid校验表单（如果是网页就常用）">
+      <form class="form-validation">
+        <div>
+          <label>名字</label>
+          <input type="text" placeholder="请输入你的名字（1到10个中文）" pattern="^[\u4e00-\u9fa5]{1,10}$"></input>
+        </div>
+        <div>
+          <label>手机</label>
+          <input type="text" placeholder="请输入你的手机号" pattern="^1[3456789]\d{9}$"></input>
+        </div>
+        <div>
+          <label>简介</label>
+          <textarea required></textarea>
+        </div>
+      </form>
+    </div>
+    <hr>
+    <div>
+      <ul class="beauty-selection">
+        <li>
+          <input type="radio" id="fed-engineer" name="radio" hidden>
+          <label for="fed-engineer"></label>
+          <span>前端工程师</span>
+        </li>
+        <li>
+          <input type="radio" id="fed-engineer" name="radio" hidden>
+          <label for="fed-engineer"></label>
+          <span>后端工程师</span>
+        </li>
+        <li>
+          <input type="radio" id="fed-engineer" name="radio" hidden>
+          <label for="fed-engineer"></label>
+          <span>全栈工程师</span>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>
